@@ -1,0 +1,15 @@
+candidate-project-java-master
+           +src
+                 +main 
+                          +java  
+                                +com
+                                      +zoomcare
+                                                  +candidatechallenge
+                                                              -CandidateChallengeApplication.java
+                                                               +model 
+                                                                    -Product.java
+                                                                +controller
+                                                                     -ProductServiceController.java
+                                                                 +service
+                                                                      -ProductService.java
+                                                                      -ProductServiceImpl.java
