@@ -1,9 +1,14 @@
 package com.zoomcare.candidatechallenge.service;
 
 import com.zoomcare.candidatechallenge.model.Employee;
+import com.zoomcare.candidatechallenge.model.Product;
 import com.zoomcare.candidatechallenge.service.EmployeeService;
 import org.springframework.stereotype.Service;
 
+import java.sql.Connection;
+import java.sql.ResultSet;
+import java.sql.SQLException;
+import java.sql.Statement;
 import java.util.Collection;
 import java.util.HashMap;
 import java.util.Map;
@@ -13,17 +18,7 @@ import java.util.Map;
 public class EmployeeServiceImpl implements EmployeeService {
     private static Map<String, Employee> employeeRepo = new HashMap<>();
 
-    static {
-        Employee honey = new Employee();
-        honey.setId("1");
-        honey.setName("Honey");
-        employeeRepo.put(honey.getId(), honey);
 
-        Employee almond = new Employee();
-        almond.setId("2");
-        almond.setName("Almond");
-        employeeRepo.put(almond.getId(), almond);
-    }
 
     @Override
     public void createEmployee(Employee employee) {
@@ -43,8 +38,34 @@ public class EmployeeServiceImpl implements EmployeeService {
     }
 
     @Override
+    public Collection<Employee> getEmployees(Connection conn) {
+        employeeRepo.clear();
+        try {
+
+            Statement st = conn.createStatement();
+            ResultSet rs =   st.executeQuery("Select * from EMPLOYEE");
+            while (rs.next()){
+                String id = rs.getString("ID");
+                    String name = rs.getString("SUPERVISOR_ID");
+                    Employee employee = new Employee();
+                    employee.setId(id);
+                    employee.setName(name);
+                    employeeRepo.put(employee.getId(), employee);
+
+                }
+            }
+        catch(SQLException se) {
+                //Handle errors for JDBC
+                se.printStackTrace();
+            }
+
+            return employeeRepo.values();
+        }
+
+    @Override
     public Collection<Employee> getEmployees() {
         return employeeRepo.values();
     }
 
 }
+

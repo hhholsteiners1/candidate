@@ -7,15 +7,48 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.sql.Connection;
+import java.sql.DriverManager;
+import java.sql.SQLException;
+
 
 @RestController
 public class EmployeeServiceController {
     @Autowired
     EmployeeService employeeService;
+    Connection conn;
+
+    public EmployeeServiceController(){
+
+        try {
+            Class.forName("org.h2.Driver");
+            conn = DriverManager.getConnection("jdbc:h2:~/test", "sa", "");
+        }
+
+        catch(SQLException se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }
+
+        catch(Exception se) {
+            //Handle errors for JDBC
+            se.printStackTrace();
+        }
+
+
+
+    }
+
+
+
 
     @RequestMapping(value = "/employees")
-    public ResponseEntity<Object> getProduct() {
+    public ResponseEntity<Object> getEmployees() {
         return new ResponseEntity<>(employeeService.getEmployees(), HttpStatus.OK);
+    }
+    @RequestMapping(value = "/employees2")
+    public ResponseEntity<Object> getEmployees2() {
+        return new ResponseEntity<>(employeeService.getEmployees(conn), HttpStatus.OK);
     }
     @RequestMapping(value = "/employees/{id}", method = RequestMethod.PUT)
     public ResponseEntity<Object>
@@ -34,4 +67,7 @@ public class EmployeeServiceController {
         employeeService.createEmployee(employee);
         return new ResponseEntity<>("Employee is created successfully", HttpStatus.CREATED);
     }
+
+
+
 }
