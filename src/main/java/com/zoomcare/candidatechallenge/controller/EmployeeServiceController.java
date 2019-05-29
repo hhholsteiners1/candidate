@@ -68,6 +68,18 @@ public class EmployeeServiceController {
         return new ResponseEntity<>("Employee is created successfully", HttpStatus.CREATED);
     }
 
+    @RequestMapping(value = "/employees2/{id}", method = RequestMethod.GET)
 
+    public ResponseEntity<Object>
+
+    getEmployee(@PathVariable("id") String id) {
+
+        return new ResponseEntity<>(employeeService.getEmployee(conn, id), HttpStatus.OK);
+
+
+
+
+
+    }
 
 }

@@ -6,10 +6,19 @@ import java.sql.Connection;
 import java.util.Collection;
 
 
+
 public interface EmployeeService {
+
     public abstract void createEmployee(Employee employee);
+
     public abstract void updateEmployee(String id, Employee employee);
+
     public abstract void deleteEmployee(String id);
+
     public abstract Collection<Employee> getEmployees();
+
     public abstract Collection<Employee> getEmployees(Connection conn);
+    public abstract Collection<Employee> getEmployee(Connection conn, String id);
+
+
 }
