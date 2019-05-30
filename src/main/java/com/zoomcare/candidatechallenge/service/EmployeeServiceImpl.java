@@ -52,8 +52,7 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeRepo.put(employee.getId(), employee);
             }
 
-        }
-            catch (SQLException se) {
+        } catch (SQLException se) {
             //Handle errors for JDBC
             se.printStackTrace();
         }
@@ -94,15 +93,13 @@ public class EmployeeServiceImpl implements EmployeeService {
                 employeeRepo.put(employee.getId(), employee);
 
             }
-        }
-
-        catch (SQLException se) {
+        } catch (SQLException se) {
 
 //Handle errors for JDBC
 
             se.printStackTrace();
 
         }
-
+        return employeeRepo.values();
     }
 }
